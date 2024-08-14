@@ -1,0 +1,77 @@
+import {
+  Home,
+  LifeBuoy,
+  Settings,
+  File,
+  LayoutTemplate,
+  Users,
+  ShieldEllipsis,
+  FileBadge,
+  LayoutPanelTop,
+} from "lucide-react";
+
+export const allNav = [
+  {
+    id: 1,
+    title: "Home",
+    icon: <Home size={20} />,
+    role: "user",
+    path: "/home",
+  },
+  {
+    id: 2,
+    title: "File",
+    icon: <File size={20} />,
+    role: "user",
+    path: "/files",
+  },
+  {
+    id: 3,
+    title: "Templates",
+    icon: <LayoutTemplate />,
+    role: "user",
+    path: "/templates",
+  },
+  {
+    id: 4,
+    title: "Settings",
+    icon: <Settings size={20} />,
+    role: "user",
+    path: "/settings",
+  },
+  {
+    id: 5,
+    title: "Help",
+    icon: <LifeBuoy size={20} />,
+    role: "user",
+    path: "/contact",
+  },
+  {
+    id: 6,
+    title: "All User",
+    icon: <Users size={20} />,
+    role: "admin",
+    path: "/admin/all-users",
+  },
+  {
+    id: 7,
+    title: "Users Request",
+    icon: <ShieldEllipsis size={20} />,
+    role: "admin",
+    path: "/admin/users-request",
+  },
+  {
+    id: 8,
+    title: "Users Files",
+    icon: <FileBadge size={20} />,
+    role: "admin",
+    path: "/admin/users-files",
+  },
+  {
+    id: 9,
+    title: "Upload Templates",
+    icon: <LayoutPanelTop size={20} />,
+    role: "admin",
+    path: "/admin/upload-templates",
+  },
+];
