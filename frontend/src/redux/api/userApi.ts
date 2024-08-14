@@ -4,7 +4,7 @@ export const userApi = createApi({
   reducerPath: "userApi",
   tagTypes: ["File"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "/api",
+    baseUrl: "https://gumflow.vercel.app/api",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("accessToken");
       if (token) {
