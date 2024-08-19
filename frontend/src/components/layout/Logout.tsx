@@ -18,6 +18,7 @@ const Logout = () => {
 
   useEffect(() => {
     if (isSuccess) {
+      localStorage.removeItem("accessToken");
       userLogout();
       navigate("/login");
     }
