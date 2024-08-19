@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const adminAuthApi = createApi({
   reducerPath: "adminAuthApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://gumflow.vercel.app/api",
+    baseUrl: "https://gumflow-api.vercel.app/api",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("accessToken");
       if (token) {
