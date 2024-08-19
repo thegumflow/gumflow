@@ -4,7 +4,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function sendPasswordResetEmail(email, name, resetTokenLink) {
   try {
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: "onboarding@resend.dev",
       to: email,
       subject: "Password Reset",
@@ -21,6 +21,7 @@ async function sendPasswordResetEmail(email, name, resetTokenLink) {
 </div>
 `,
     });
+    console.log(result);
     return {
       success: true,
       message: "Password Reset link send to email successfully",
