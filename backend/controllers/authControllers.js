@@ -1,4 +1,6 @@
 const userModel = require("../models/userModel");
+const adminModel = require("../models/adminModel");
+
 const { createToken } = require("../utils/tokenCreate");
 const { responseReturn } = require("../utils/response");
 const bcrypt = require("bcrypt");
@@ -220,6 +222,32 @@ class userAuthController {
   forgot_password = async (req, res) => {
     const { email } = req.body;
     try {
+      // for admin
+      const adminUser = await adminModel.findOne({ email });
+      if (adminUser) {
+        const resetToken = user.getResetPasswordToken();
+
+        await adminUser.save();
+
+        const resetUrl = `${process.env.CLIENT_URL}/password/reset/${resetToken}`;
+
+        const emailResponse = await sendPasswordResetEmail(
+          user.email,
+          user.fullName,
+          resetUrl
+        );
+        if (!emailResponse.success) {
+          return responseReturn(res, 404, {
+            error: emailResponse.message,
+          });
+        }
+
+        return responseReturn(res, 200, {
+          message: "Check your email for a link to reset your password.",
+        });
+      }
+
+      // for user
       const user = await userModel.findOne({ email: email });
       if (!user) {
         return responseReturn(res, 404, {
