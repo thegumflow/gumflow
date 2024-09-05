@@ -298,23 +298,37 @@ class userAuthController {
         resetPasswordExpire: { $gt: Date.now() },
       });
 
-      if (!user) {
-        return responseReturn(res, 404, {
-          error: "Password reset token is invalid or has been expired",
-        });
-      }
+      const admin = await adminModel.findOne({
+        resetPasswordToken,
+        resetPasswordExpire: { $gt: Date.now() },
+      });
 
       if (body.newPassword !== body.confirmPassword) {
         return responseReturn(res, 400, { error: "Password doesn't match" });
       }
 
-      user.password = await bcrypt.hash(body.newPassword, 10);
+      if (user) {
+        user.password = await bcrypt.hash(body.newPassword, 10);
+        user.resetPasswordExpire = undefined;
+        user.resetPasswordToken = undefined;
+        await user.save();
+        return responseReturn(res, 201, {
+          message: "Password changed successfully",
+        });
+      } else if (admin) {
+        admin.password = await bcrypt.hash(body.newPassword, 10);
+        admin.resetPasswordExpire = undefined;
+        admin.resetPasswordToken = undefined;
+        await admin.save();
 
-      user.resetPasswordExpire = undefined;
-      user.resetPasswordToken = undefined;
-
-      await user.save();
-      responseReturn(res, 201, { message: "Password changed successfully" });
+        return responseReturn(res, 201, {
+          message: "Password changed successfully",
+        });
+      } else {
+        return responseReturn(res, 404, {
+          error: "Password reset token is invalid or has been expired",
+        });
+      }
     } catch (error) {
       responseReturn(res, 400, { error: error.message });
     }
@@ -334,7 +348,16 @@ class userAuthController {
         resetPasswordExpire: { $gt: Date.now() },
       });
 
+      const admin = await adminModel.findOne({
+        resetPasswordToken,
+        resetPasswordExpire: { $gt: Date.now() },
+      });
+
       if (user) {
+        return responseReturn(res, 201, {
+          message: "Token is valid",
+        });
+      } else if (admin) {
         return responseReturn(res, 201, {
           message: "Token is valid",
         });
