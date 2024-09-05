@@ -19,7 +19,7 @@ const adminSchema = new Schema(
   { timestamps: true }
 );
 
-userSchema.methods.getResetPasswordToken = function () {
+adminSchema.methods.getResetPasswordToken = function () {
   const resetToken = crypto.randomBytes(20).toString("hex");
 
   // hash token
