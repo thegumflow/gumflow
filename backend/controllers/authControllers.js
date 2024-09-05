@@ -225,7 +225,7 @@ class userAuthController {
       // for admin
       const adminUser = await adminModel.findOne({ email });
       if (adminUser) {
-        const resetToken = user.getResetPasswordToken();
+        const resetToken = adminUser.getResetPasswordToken();
 
         await adminUser.save();
 
