@@ -232,8 +232,8 @@ class userAuthController {
         const resetUrl = `${process.env.CLIENT_URL}/password/reset/${resetToken}`;
 
         const emailResponse = await sendPasswordResetEmail(
-          user.email,
-          user.fullName,
+          adminUser.email,
+          "",
           resetUrl
         );
         if (!emailResponse.success) {
